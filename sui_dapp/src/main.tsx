@@ -6,6 +6,7 @@ import "@mysten/dapp-kit/dist/index.css";
 import "@radix-ui/themes/styles.css";
 import { App } from "./app";
 import { getFullnodeUrl } from "@mysten/sui/client";
+import "./styles/global.css";
 
 const queryClient = new QueryClient();
 
