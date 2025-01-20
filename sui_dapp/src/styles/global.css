@@ -5,6 +5,7 @@
     font-style: normal;
 }
 
+
 *,
 *::before,
 *::after {
@@ -13,7 +14,7 @@
 
 * {
     margin: 0;
-    border: 1px solid rgba(255, 0, 0, 0.623);
+    /* border: 1px solid rgba(255, 0, 0, 0.623); */
     font-family: 'Pixel Operator', sans-serif;
 }
 
@@ -52,3 +53,4 @@ h6 {
 #__next {
     isolation: isolate;
 }
+
