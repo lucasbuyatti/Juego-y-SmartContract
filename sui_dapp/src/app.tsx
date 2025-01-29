@@ -1,21 +1,20 @@
-import { ConnectButton } from "@mysten/dapp-kit";
-import { Box, Text, Theme } from "@radix-ui/themes";
+import { Theme } from "@radix-ui/themes";
 import { Header } from "./components/header/Header";
-import { GameTaTeTi } from "./components/game/game";
-
+import { Game } from "./components/game/game";
+import { Info } from "./components/info/info";
 
 export function App() {
 
   return (
     <>
-      <Theme 
-      appearance="dark" 
-      accentColor="violet"
-      panelBackground="translucent"
+      <Theme
+        appearance="dark"
+        accentColor="teal"
+        panelBackground="translucent"
       >
-        <Header/>
-        <GameTaTeTi/>
-
+        <Header />
+        <Game />
+        <Info />
       </Theme>
     </>
 

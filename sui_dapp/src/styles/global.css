@@ -1,9 +1,29 @@
+@import "@radix-ui/colors/violet.css";
+
 @font-face {
     font-family: 'Pixel Operator';
-    src: url('../../public/fonts/PixelOperator.ttf') format('truetype');
+    src: url('/fonts/PixelOperator.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
+
+
+/* Separador */
+.SeparatorRoot {
+	background-color: #12a594; /* Teal color */
+}
+
+.SeparatorRoot[data-orientation="horizontal"] {
+	height: 1px;
+	width: 100%;
+}
+
+.SeparatorRoot[data-orientation="vertical"] {
+	height: 100%;
+	width: 1px;
+}
+/* Separador */
 
 
 *,
@@ -14,7 +34,6 @@
 
 * {
     margin: 0;
-    /* border: 1px solid rgba(255, 0, 0, 0.623); */
     font-family: 'Pixel Operator', sans-serif;
 }
 
