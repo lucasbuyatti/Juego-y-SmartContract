@@ -1,27 +1,46 @@
+import { Socket } from "socket.io";
 
-interface Users {
-    address: string;
-    balance: number | null | string;
+export interface Player {
+    socketId: string;
+    usrState: UserState;
+}
+
+export interface UserState {
+    address: string | null;
+    coinBalance: number | null;
     coinType: string | null;
-    table: number[];
-    isPlaying: boolean;
-    isWinner: boolean;
-    isTurn: boolean;
-};
-
-const users = new Set<Users>();
-
-function createUsers(address: string, balance: number | null | string, coinType: string | null, table: number[], isPlaying: boolean, isWinner: boolean, isTurn: boolean): Users {
-    return { address, balance, coinType, table, isPlaying, isWinner, isTurn };
+    walletIsConnected: boolean | null;
 }
 
-function addUserToList(address: string, balance: number | null | string, coinType: string | null): void {
-    users.add(createUsers(address, balance, coinType, [0,0,0,0,0,0,0,0,0], false, false, false));
+export const users = new Set<Player>();
+
+export function createUsers(data: Player) {
+    return {
+        socketId: data.socketId as string,
+        usrState: {
+            address: data.usrState.address,
+            coinBalance: data.usrState.coinBalance,
+            coinType: data.usrState.coinType,
+            walletIsConnected: data.usrState.walletIsConnected
+        } as UserState
+    };
 }
 
-function removeUserFromList(address: string): void {
+export function addUserToList(user: Player) {
+    users.add(createUsers({
+        socketId: user.socketId as string,
+        usrState: {
+            address: user.usrState.address,
+            coinBalance: user.usrState.coinBalance,
+            coinType: user.usrState.coinType,
+            walletIsConnected: user.usrState.walletIsConnected
+        } as UserState
+    }));
+}
+
+export function removeUserFromList(socketId: string) {
     users.forEach((user) => {
-        if (user.address === address) {
+        if (socketId == user.socketId) {
             users.delete(user);
         }
     });
@@ -30,7 +49,7 @@ function removeUserFromList(address: string): void {
 type Game = {
     id: string;
     winner: string;
-    players: Users[];
+    players: Set<Player>;
     table: string[];
 };
 

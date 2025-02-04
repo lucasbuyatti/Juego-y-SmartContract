@@ -1,22 +1,22 @@
 import { Theme } from "@radix-ui/themes";
-import { Header } from "./components/header/Header";
-import { Game } from "./components/game/game";
-import { Info } from "./components/info/info";
+import { HeaderComponent } from "./components/header/headerComponent";
+import { GameComponent } from "./components/game/gameComponent";
+import { DataListComponent } from "./components/datalist/dataListComponent";
 
 export function App() {
 
   return (
-    <>
-      <Theme
-        appearance="dark"
-        accentColor="teal"
-        panelBackground="translucent"
-      >
-        <Header />
-        <Game />
-        <Info />
-      </Theme>
-    </>
+
+    <Theme
+      appearance="dark"
+      accentColor="teal"
+      panelBackground="translucent"
+    >
+      
+        <HeaderComponent />
+        <GameComponent />
+        <DataListComponent />
+    </Theme>
 
   );
 }

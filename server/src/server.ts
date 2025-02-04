@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { Server } from 'socket.io';
 import { createServer } from 'node:http';
+import { addUserToList, createUsers, Player, removeUserFromList, users, UserState } from './users';
 
 const app = express();
 
@@ -21,18 +22,45 @@ const io = new Server(server, {
 
 
 io.on("connection", (socket) => {
-    console.log("Usuario conectado", socket.id);
 
-    socket.on("disconnect", () => {
-        console.log("Usuario desconectado", socket.id);
+    console.log("connection received:", socket.id);
 
+    // Agrego al array al usuario que se conecta
+    socket.on("UserAdd", (data: UserState) => {
 
+        const player: Player = {
+            socketId: socket.id,
+            usrState: {
+                address: data.address,
+                coinBalance: data.coinBalance,
+                coinType: data.coinType,
+                walletIsConnected: data.walletIsConnected
+            } as UserState
+        };
+
+        addUserToList(player);
+
+        io.emit("TotalUsers", users.size); // Cuando alguien se conecta, manda la cantidad de usuarios conectados.
+        
+        console.log(users);
     });
 
+    // Elimino del array al usuario que se desconecta
+    socket.on("disconnect", () => { 
+        console.log("disconnect received:", socket.id);
+        
+        removeUserFromList(socket.id);
+
+        io.emit("TotalUsers", users.size); // Cuando alguien se desconecta, manda la cantidad de usuarios conectados.
+        
+        console.log(users);
+
+
+    }); 
 });
 
 
 
-server.listen(3333, () => {
-    console.log("Server running on port 3333");
+server.listen(7771, () => {
+    console.log("Server running on port 7771");
 });
