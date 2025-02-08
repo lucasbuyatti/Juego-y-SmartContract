@@ -1,8 +1,9 @@
-import express from 'express';
 import cors from 'cors';
-import { Server } from 'socket.io';
+import express from 'express';
 import { createServer } from 'node:http';
-import { addUserToList, createUsers, Player, removeUserFromList, users, UserState } from './users';
+import { Server } from 'socket.io';
+import { addUserToList, Player, removeUserFromList, users, UserState } from './users';
+import { createGame, game } from './game';
 
 const app = express();
 
@@ -42,8 +43,15 @@ io.on("connection", (socket) => {
 
         io.emit("TotalUsers", users.size); // Cuando alguien se conecta, manda la cantidad de usuarios conectados.
         
-        console.log(users);
+        // console.log(users);
     });
+
+
+    socket.on("joinGame", () => {
+        console.log(`El jugador ${socket.id} esta en la lista de espera`);
+        createGame(socket.id, socket);
+    });
+
 
     // Elimino del array al usuario que se desconecta
     socket.on("disconnect", () => { 
@@ -53,9 +61,7 @@ io.on("connection", (socket) => {
 
         io.emit("TotalUsers", users.size); // Cuando alguien se desconecta, manda la cantidad de usuarios conectados.
         
-        console.log(users);
-
-
+        // console.log(users);
     }); 
 });
 

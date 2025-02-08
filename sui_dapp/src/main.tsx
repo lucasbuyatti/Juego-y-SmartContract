@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { createNetworkConfig, SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -8,8 +7,9 @@ import "@mysten/dapp-kit/dist/index.css";
 import "@radix-ui/themes/styles.css";
 import "./styles/global.css";
 import { getFullnodeUrl } from "@mysten/sui/client";
-import { UsersProvider } from "./contexts/users/usersContext";
-import { SocketProviders } from "./contexts/socket/socketContext";
+import { UsersProvider } from "./contexts/UsersContext";
+import { SocketProviders } from "./contexts/SocketContext";
+import { GameProvider } from "./contexts/GameContext";
 
 
 
@@ -35,12 +35,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
     <SuiClientProvider networks={networkConfig} defaultNetwork={node.test}>
       <WalletProvider autoConnect={true} theme={tealTheme}>
-
+        
+      <GameProvider>
         <UsersProvider>
           <SocketProviders>
             <App />
           </SocketProviders>
         </UsersProvider>
+        </GameProvider>
 
       </WalletProvider>
     </SuiClientProvider>

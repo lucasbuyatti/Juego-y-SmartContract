@@ -46,10 +46,4 @@ export function removeUserFromList(socketId: string) {
     });
 }
 
-type Game = {
-    id: string;
-    winner: string;
-    players: Set<Player>;
-    table: string[];
-};
 
