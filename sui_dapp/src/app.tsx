@@ -5,12 +5,11 @@ import { DataListComponent } from "./components/DataListComponent";
 
 
 export function App() {
-
   return (
     <>
       <Theme 
       appearance="dark" 
-      accentColor="violet"
+      accentColor="teal"
       panelBackground="translucent"
       >
         <HeaderComponent/>

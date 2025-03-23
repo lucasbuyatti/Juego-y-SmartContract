@@ -1,16 +1,14 @@
-import { createContext, ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { UserContext, UserState } from "./UsersContext";
+import { UserContext, } from "./UsersContext";
 
 
 export interface SocketState {
     socket: Socket | null;
-    socketIsConnected: boolean | null;
 }
 
 export const SocketContext = createContext<SocketState>({
     socket: null,
-    socketIsConnected: null,
 });
 
 interface UsersProviderProps {
@@ -21,18 +19,11 @@ export function SocketProviders({ children }: UsersProviderProps) {
 
     const socket = useMemo(() => io("http://localhost:7771", { autoConnect: false }), []);
 
-    const [sockState, setSockState] = useState<SocketState>({
+    const [sock, setSockState] = useState<SocketState>({
         socket: null,
-        socketIsConnected: null
     });
 
     const user = useContext(UserContext);
-
-    const userRef = useRef<UserState>(user);
-
-    useEffect(() => {
-        userRef.current = user;
-    }, [user]);
 
     useEffect(() => {
 
@@ -48,12 +39,14 @@ export function SocketProviders({ children }: UsersProviderProps) {
         }
 
         const onConnect = () => {
-            socket.emit("UserAdd", userRef.current);
-            setSockState({ socket: socket, socketIsConnected: true });
+            socket.emit("UserAdd", socket.id);
+            setSockState({ socket: socket});
         };
 
+    
+
         const onDisconnect = () => {
-            setSockState({ socket: null, socketIsConnected: false });
+            setSockState({ socket: null});
         };
 
         socket.on("connect", onConnect);
@@ -61,13 +54,13 @@ export function SocketProviders({ children }: UsersProviderProps) {
 
         return () => {
             socket.off("connect", onConnect);
-            socket.off("connect", onDisconnect);
+            socket.off("disconnect", onDisconnect);
         };
 
     }, [user.walletIsConnected]);
 
     return (
-        <SocketContext.Provider value={sockState}>
+        <SocketContext.Provider value={sock}>
             {children}
         </SocketContext.Provider>
     );

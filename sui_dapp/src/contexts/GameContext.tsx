@@ -9,7 +9,6 @@ export enum estatus {
 
 export const GameContext = createContext<{
   status: estatus;
-  toggleStatus: () => void;
   setStatus: Dispatch<SetStateAction<estatus>>
 } | null>(null);
 
@@ -17,14 +16,8 @@ export const GameContext = createContext<{
 export function GameProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<estatus>(estatus.idle);
 
-  const toggleStatus = () => {
-    setStatus((prevStatus) =>
-      prevStatus === estatus.idle ? estatus.inqueue : estatus.idle
-    );
-  };
-
   return (
-    <GameContext.Provider value={{ status, toggleStatus, setStatus }}>
+    <GameContext.Provider value={{ status, setStatus }}>
       {children}
     </GameContext.Provider>
   );

@@ -57,6 +57,6 @@ export const tealTheme: ThemeVars = {
 		fontFamily: "'Pixel Operator', sans-serif",
 		fontStyle: 'normal',
 		lineHeight: '1.3',
-		letterSpacing: '1px',  // Corregido valor (faltaba px)
+		letterSpacing: '1px',
 	},
 };

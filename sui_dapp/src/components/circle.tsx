@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { JSX } from "react";
 import { teal } from "@radix-ui/colors";
 
-export function circle(isClicked: boolean): JSX.Element | null {
-    if (isClicked) {
+export function Circle(): JSX.Element | null {
+    
      return (
          <motion.div
              initial={{ opacity: 0, scale: 0.5 }}
@@ -21,7 +21,5 @@ export function circle(isClicked: boolean): JSX.Element | null {
              }}
          />
      );
-    } else {
-     return null;
-    }
+
  }

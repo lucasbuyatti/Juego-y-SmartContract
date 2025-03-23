@@ -2,8 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import { addUserToList, Player, removeUserFromList, users, UserState } from './users';
-import { createGame, game } from './game';
+import { addUserToList, removeUserFromList, users } from './users';
+import { addPlayersInQueue, createGame, gameManager, removePlayersFromQueue } from './game';
 
 const app = express();
 
@@ -20,52 +20,47 @@ const io = new Server(server, {
     }
 });
 
-
-
 io.on("connection", (socket) => {
 
     console.log("connection received:", socket.id);
 
-    // Agrego al array al usuario que se conecta
-    socket.on("UserAdd", (data: UserState) => {
-
-        const player: Player = {
-            socketId: socket.id,
-            usrState: {
-                address: data.address,
-                coinBalance: data.coinBalance,
-                coinType: data.coinType,
-                walletIsConnected: data.walletIsConnected
-            } as UserState
-        };
-
-        addUserToList(player);
-
-        io.emit("TotalUsers", users.size); // Cuando alguien se conecta, manda la cantidad de usuarios conectados.
+    socket.on("UserAdd", (data: string) => {
+    
+            addUserToList(data);
+    
+            io.emit("TotalUsers", users.size); // Cuando alguien emite agregar usuario, cosa que pasa cuando su wallet esta conectada, se emite la cantidad de usuarios conectados
         
-        // console.log(users);
+        });
+
+    socket.on("joinqueue", (data: string) => {
+        console.log(`${socket.id} quiere jugar`);
+        addPlayersInQueue(socket.id, {socket: socket, address: data});
+        
+        createGame();
+
     });
 
+    socket.on("leavequeue", (data: string) => {
+        console.log(`${socket.id} quiere dejar de jugar`);
+        removePlayersFromQueue(socket.id); // funcionando
 
-    socket.on("joinGame", () => {
-        console.log(`El jugador ${socket.id} esta en la lista de espera`);
-        createGame(socket.id, socket);
     });
 
+    socket.on("cellSelected", (data: number) => {
+    
+        gameManager(socket.id, data);
+    
+    });
 
-    // Elimino del array al usuario que se desconecta
-    socket.on("disconnect", () => { 
+    socket.on("disconnect", () => {
         console.log("disconnect received:", socket.id);
-        
+
         removeUserFromList(socket.id);
+        //console.log(users);
+        io.emit("TotalUsers", users.size); // Cuando se desconecta alguien, se emite a todos los clientes la cantidad de usuarios actualizada
 
-        io.emit("TotalUsers", users.size); // Cuando alguien se desconecta, manda la cantidad de usuarios conectados.
-        
-        // console.log(users);
-    }); 
+    });
 });
-
-
 
 server.listen(7771, () => {
     console.log("Server running on port 7771");

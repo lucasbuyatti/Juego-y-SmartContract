@@ -11,7 +11,7 @@ export function DataListComponent() {
     const user = useContext(UserContext);
     const sock = useContext(SocketContext);
 
-	const [total, setTotal] = useState<number>(0);
+    const [total, setTotal] = useState<number>(0);
 
     useEffect(() => {
         if (sock.socket) {
@@ -27,7 +27,8 @@ export function DataListComponent() {
         }
     }, [sock.socket]);
 
-    if (user.walletIsConnected) {
+
+    if (user.walletIsConnected && sock.socket?.connected) {
         return (
             <Container m={"9"}>
                 <DataList.Root size={"3"} orientation={"vertical"}>
@@ -37,7 +38,7 @@ export function DataListComponent() {
                         <DataList.Label color="teal">Balance</DataList.Label>
                         <DataList.Value>{user.coinBalance} {user.coinType}</DataList.Value>
                         <DataList.Label color="teal">Server Status</DataList.Label>
-                        <DataList.Value>{sock.socketIsConnected ? "Connected" : "Not Connected"}</DataList.Value>
+                        <DataList.Value>{sock.socket?.connected ? "Connected" : "Not Connected"}</DataList.Value>
                         <DataList.Label color="teal">Users Connected</DataList.Label>
                         <DataList.Value>{total}</DataList.Value>
                     </DataList.Item>
