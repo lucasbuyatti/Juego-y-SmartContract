@@ -114,7 +114,7 @@ sequenceDiagram
             deactivate Serv
         end
 
-        alt checkWinner() devuelve "X" or "O"
+        alt checkWinner() devuelve "X" o "O"
             Serv->>P1: emit("winner", winner: true/false)
             Serv->>P2: emit("winner", winner: true/false)
         else checkDraw()
