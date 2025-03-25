@@ -84,7 +84,7 @@ sequenceDiagram
     Note over Serv: addPlayersInQueue(P2.id, {P2.socket, P2.address})
     deactivate Serv
 
-    Serv->>Serv: waitingPlayers.size >= 2
+    Serv->>Serv: waitingPlayers.size == 2
     Serv->>Serv: createGame()
     activate Serv
     Serv->>P1: emit("ingame")
