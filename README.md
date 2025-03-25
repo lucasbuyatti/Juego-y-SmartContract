@@ -1,5 +1,5 @@
 # Smart Contract
-### Blockchain Game [Object](https://docs.sui.io/concepts/object-model)
+### Blockchain Game [!Object](https://docs.sui.io/concepts/object-model)
 ```mermaid
 classDiagram
 		class  Game  {
