@@ -9,8 +9,6 @@ I spent a good amount of time in the **crypto** and casino world (even though I�
 ### Smart Contract Integration
 - The smart contract is not yet integrated into the web frontend and backend
 
-- The smart contract is not yet implemented in the web frontend and backend
-
 - The basic game flow I had in mind:
 
 	- Player 1 joins the queue. The “admin” automatically creates the on-chain object. Player 1 is then locked into the game.
