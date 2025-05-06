@@ -27,6 +27,18 @@ One major issue not yet addressed is gas fee management on the admin side
 ### Hibrid?
 Another major issue is the power of the admin address, as it can create the game and declare a winner. Is this a problem? Not so much, because the assert functions prevent any "superpowers" from the admin. However, the essence of blockchain is decentralization, but what led me to treat this project as a hybrid is that I developed it with no prior knowledge of smart contracts, React, or ExpressJS
 
+# Demo
+
+[video](https://youtu.be/m-KqhwK2ARU) (only the game)
+
+To simulate the smart contract logic, follow these steps:
+1. Uncomment the test file [`betsystem_tests.move`](https://github.com/lucasbuyatti/sui_dapp/blob/main/sui_dapp/betsystem/tests/betsystem_tests.move).
+2. Open a terminal and navigate to the `sui_dapp/betsystem` directory.
+3. Run the following command:
+```bash
+sui move test
+```
+
 # Smart Contract
 ### Blockchain Game [Object](https://docs.sui.io/concepts/object-model)
 ```mermaid
