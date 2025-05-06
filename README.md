@@ -9,10 +9,15 @@ I spent a good amount of time in the **crypto** and casino world (even though I�
 ### Smart Contract Integration
 - The smart contract is not yet integrated into the web frontend and backend
 
-- The basic game flow I had in mind:
+- The basic game & blockchain flow I had in mind:
 
-	- Player 1 joins the queue. The “admin” automatically creates the on-chain object. Player 1 is then locked into the game.
-	- Player 2 joins the queue, and the game starts.
+	- Player 1 joins the queue.
+
+	- The admin automatically emits a transaction to create the on-chain object.
+
+	- The server notifies Player 1 that they can emit the transaction to stake their money and link their address to the object
+
+	- Player 2 joins the queue and the server instructs them to emit the transaction to stake their money and link their address.
 
 ### Gas Fees (Admin Side)
 One major issue not yet addressed is gas fee management on the admin side
